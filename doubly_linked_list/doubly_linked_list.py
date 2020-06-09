@@ -76,20 +76,39 @@ class DoublyLinkedList:
         current_head = self.head
         self.head = self.head.next
         self.head.prev = None
-        return current_head.value
+        return current_head
 
     """Wraps the given value in a ListNode and inserts it 
     as the new tail of the list. Don't forget to handle 
     the old tail node's next pointer accordingly."""
     def add_to_tail(self, value):
-        pass
+        # define new node
+        new_node = ListNode(value, None, None)
+        self.length += 1
+        # point to nothing at the end of the list
+        new_node.next = None
+        # insert at head of list if empty list
+        if self.head == None:
+            new_node.prev = None
+            self.head = new_node
+            return
+        # grab first node
+        first_node = self.head
+
+        #go to end of list
+        while first_node.next:
+            first_node = first_node.next
+        # when at end, set next node equal to new node
+        first_node.next = new_node
+        new_node.prev = first_node
 
     """Removes the List's current tail node, making the 
     current tail's previous node the new tail of the List.
     Returns the value of the removed Node."""
     def remove_from_tail(self):
-        pass
-
+        value = self.tail.value
+        self.delete(self.tail)
+        return value
     """Removes the input node from its current spot in the 
     List and inserts it as the new head node of the List."""
     def move_to_front(self, node):
@@ -136,10 +155,30 @@ print('-'*50)
 double_list.traverse()
 
 print('-'*50)
-print('After Delete')
+print('After Remove from head')
 print('-'*50)
 double_list.remove_from_head()
 double_list.remove_from_head()
 
 double_list.traverse()
 
+# Add to tail
+double_list.add_to_tail(77)
+double_list.add_to_tail(22)
+
+
+# traverse list
+print('-'*50)
+print('After insertion - Tail')
+print('-'*50)
+double_list.traverse()
+
+# Remove from tail
+double_list.remove_from_tail()
+
+
+# traverse list
+print('-'*50)
+print('After Removal - Tail')
+print('-'*50)
+double_list.traverse()
